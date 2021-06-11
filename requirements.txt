@@ -1,4 +1,5 @@
 pynput==1.7.3
+Nuitka==0.6.15.3
 PySide6==6.1.1
 requests==2.21.0
 playsound==1.2.2
