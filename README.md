@@ -1,4 +1,4 @@
-# Translation 
+# Translation ![](https://img.shields.io/badge/language-Python3-brightgreen.svg)
 A word-selector translation software by PySide6
 
 ## Compile and Distribution
