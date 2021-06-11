@@ -42,5 +42,10 @@ The plugin used by the project is the compiled pyd file, which will have a faste
 python -m nuitka --mingw64 --module --output-dir source_script plugins\your_plugin.py
 ```
 
+## Screenshots
+![](https://github.com/walirt/Translation/blob/main/screenshots/1.png?raw=true)
+![](https://github.com/walirt/Translation/blob/main/screenshots/2.png?raw=true)
+![](https://github.com/walirt/Translation/blob/main/screenshots/3.png?raw=true)
+
 ## License
 ![](https://img.shields.io/badge/License-GPL-orange.svg)
