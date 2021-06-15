@@ -34,7 +34,7 @@ translation.exe
 4. Take the clipboard text;
 5. Restore clipboard;
 6. Call API to translate text;
-7. Show results;
+7. Show results.
 
 ## Note
 The plugin used by the project is the compiled pyd file, which will have a faster loading speed, of course, you can also use the py file directly. I recommend you to use pyd file, similarly, it is also very simple to compile it, you only need to run the following command in the console:
