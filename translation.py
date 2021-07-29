@@ -8,10 +8,10 @@ import os
 import re # main fuction no use, import for script use
 import sys
 import time 
-import ctypes # main fuction no use, import for script use
+import ctypes
 import random # main fuction no use, import for script use
 import hashlib # main fuction no use, import for script use
-from math import sqrt
+from math import sqrt, ceil
 from functools import partial
 from shutil import copy as copy_file
 from tempfile import NamedTemporaryFile
@@ -80,6 +80,34 @@ def chainThreadExec(funcs, *args, **kwargs):
 	if len(funcs[1:]) == 0:
 		return future
 	return chainThreadExec(funcs[1:], future.result())
+
+def getScreenScale():
+	platform = sys.platform
+	if platform == "win32":
+		scale_map = {
+			96: 1,
+			120: 1.25,
+			144: 1.5,
+			192: 2
+		}
+		user32 = ctypes.windll.user32
+		gdi32 = ctypes.windll.gdi32
+		LOGPIXELSX = 88
+		LOGPIXELSY = 90
+
+		user32.SetProcessDPIAware()
+		hDC = user32.GetDC(0)
+		xdpi = gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
+		ydpi = gdi32.GetDeviceCaps(hDC, LOGPIXELSY)
+		if xdpi == ydpi:
+			return scale_map.get(xdpi, 1)
+		return 1
+	elif platform == "linux":
+		return 1
+	elif platform == "darwin":
+		return 1
+	else:
+		return 1
 
 class EventBus(QObject):
 	show = Signal(list)
@@ -398,9 +426,13 @@ class TranslationFloatWidget(QWidget):
 
 		self.cache = None
 
+		self.scale = getScreenScale()
+
 	def show(self, coord):
 		if not self.isVisible():
 			x, y = coord
+			x = ceil(x / self.scale)
+			y = ceil(y / self.scale)
 			self.move(x + 15, y + 15)
 			super().show()
 			# self.activateWindow()
@@ -408,6 +440,8 @@ class TranslationFloatWidget(QWidget):
 	def hide(self, coord):
 		if self.isVisible():
 			x, y = coord
+			x = ceil(x / self.scale)
+			y = ceil(y / self.scale)
 			wx, wy = self.pos().toTuple()
 			if x >= wx and x <= (wx + 30) and y > wy and y <= (wy + 30):
 				return
